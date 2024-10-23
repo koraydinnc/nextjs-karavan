@@ -17,11 +17,21 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif; /* Open Sans'ı burada kullanın */
+  font-size: 16px; /* Temel yazı boyutu */
+  line-height: 1.5; /* Satır yüksekliği */
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+h1, h2, h3, h4 {
+  font-family: 'Open Sans', sans-serif; 
+}
+
+h1 {
+  font-size: 2rem; /* Başlık boyutu */
+  font-weight: 700; /* Kalın yazı */
+}
+
+h2 {
+  font-size: 1.5rem; /* İkinci başlık boyutu */
+  font-weight: 600; /* Orta kalınlık */
 }

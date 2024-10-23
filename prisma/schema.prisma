@@ -16,13 +16,15 @@ model User {
 }
 
 model Reservation {
-  id        Int      @id @default(autoincrement())
-  startDate DateTime
-  endDate   DateTime
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int
-  Caravan   Caravan? @relation(fields: [caravanId], references: [id])
-  caravanId Int?
+  id            Int           @id @default(autoincrement())
+  startDate     DateTime
+  endDate       DateTime
+  user          User          @relation(fields: [userId], references: [id])
+  userId        Int
+  caravan       Caravan?      @relation(fields: [caravanId], references: [id])
+  caravanId     Int?
+  caravanPark   CaravanPark?  @relation(fields: [caravanParkId], references: [id])
+  caravanParkId Int?
 }
 
 model Caravan {
@@ -30,5 +32,13 @@ model Caravan {
   name         String
   description  String
   price        Float
-  reservations Reservation[] // Karavan ile rezervasyonlar arasındaki ilişki
+  reservations Reservation[] 
+}
+
+model CaravanPark {
+  id            Int           @id @default(autoincrement())
+  name          String
+  description   String
+  price         Float
+  reservations  Reservation[] 
 }
