@@ -2,41 +2,73 @@
 
 import { motion } from 'framer-motion';
 import React from 'react';
-
-const icon = {
-  hidden: { opacity: 0, pathLength: 0 },
-  visible: {
-    opacity: 1,
-    pathLength: 1,
-    transition: { duration: 2 }
-  }
-};
+import Image from 'next/image';
+import Logo from '../../public/Logo.png';
 
 const NavBar = () => {
   return (
-    <div className="flex justify-between items-center p-4 bg-gray-100 shadow-md">
+    <div className="flex justify-between items-center p-4 bg-white shadow-sm border-b border-gray-200">
       <nav className="flex justify-between items-center w-full max-w-screen-xl mx-auto">
         <div className="mr-8">
-          <svg viewBox="0 0 100 100" className="w-10 h-10">
-            <motion.path
-              d="M10 10 H 90 V 90 H 10 L 10 10" // Buraya SVG'nizin path'ini yerleştirin
-              variants={icon}
-              initial="hidden"
-              animate="visible"
-              stroke="black"
-              strokeWidth="2"
-              fill="transparent"
-            />
-          </svg>
+          <motion.div
+            className="w-24 h-20"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <Image src={Logo} alt="Logo" width={150} height={150} />
+          </motion.div>
         </div>
 
-        <div className="flex space-x-6">
-          <span className="text-lg font-semibold hover:text-blue-500 cursor-pointer">Karavanım Var</span>
-          <span className="text-lg font-semibold hover:text-blue-500 cursor-pointer">Karavanım Yok</span>
-        </div>
-        <div>
-        <span className="text-lg font-semibold hover:text-blue-500 cursor-pointer">Karavanınızı KaravanGo'ya taşıyın</span>
-        </div>
+        <motion.div
+          className="flex space-x-6 text-gray-700"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0, y: -10 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: {
+                delay: 0.3,
+                duration: 0.8,
+                staggerChildren: 0.2
+              },
+            }
+          }}
+        >
+          {['Karavanım Var', 'Karavanım Yok'].map((text, index) => (
+            <motion.span
+              key={index}
+              className="text-lg font-medium hover:text-blue-600 cursor-pointer transition-colors duration-300"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              {text}
+            </motion.span>
+          ))}
+        </motion.div>
+
+        <motion.div
+          className="flex space-x-6"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0, y: -10 },
+            visible: {
+              opacity: 1,
+              y: 0,
+            }
+          }}
+        >
+          <motion.button
+            className="bg-blue-500 text-white px-6 py-2 rounded-md font-medium hover:bg-blue-600 transition-colors duration-300 shadow-sm"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            Giriş Yap
+          </motion.button>
+        </motion.div>
       </nav>
     </div>
   );

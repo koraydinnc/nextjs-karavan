@@ -28,10 +28,10 @@ h1, h2, h3, h4 {
 
 h1 {
   font-size: 2rem; /* Başlık boyutu */
-  font-weight: 700; /* Kalın yazı */
+  font-weight: 500; /* Kalın yazı */
 }
 
 h2 {
   font-size: 1.5rem; /* İkinci başlık boyutu */
-  font-weight: 600; /* Orta kalınlık */
+  font-weight: 400; /* Orta kalınlık */
 }
