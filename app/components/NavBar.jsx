@@ -10,7 +10,7 @@ const NavBar = () => {
     <div className="bg-white shadow-sm border-b border-gray-200">
       <div className="flex justify-between items-center p-4 max-w-screen-xl mx-auto">
         <nav className="flex justify-between items-center w-full">
-          <div className="mr-8">
+          <div className="mb-4">
             <motion.div
               className="w-24 h-20"
               initial={{ opacity: 0, scale: 0 }}
@@ -38,10 +38,10 @@ const NavBar = () => {
               }
             }}
           >
-            {['Karavanım Var', 'Karavanım Yok'].map((text, index) => (
+            {['Karavan Konaklama Yerleri', 'Konaklama Yerleri'].map((text, index) => (
               <motion.span
                 key={index}
-                className="text-lg font-medium hover:text-blue-600 cursor-pointer transition-colors duration-300"
+                className="text-lg font-medium hover:text-green-600 cursor-pointer transition-colors duration-300"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
@@ -63,7 +63,7 @@ const NavBar = () => {
             }}
           >
             <motion.button
-              className="bg-blue-500 text-white px-6 py-2 rounded-md font-medium hover:bg-blue-600 transition-colors duration-300 shadow-sm"
+              className="bg-green-600 text-white px-6 py-2 rounded-md font-medium hover:bg-white-600 transition-colors duration-300 shadow-sm"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
@@ -74,7 +74,7 @@ const NavBar = () => {
       </div>
 
       <motion.div
-        className="w-full px-4 py-2 bg-gray-100"
+        className="w-full px-4 py-2"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -83,7 +83,7 @@ const NavBar = () => {
           <input
             type="text"
             placeholder="Search..."
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-2 border  rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
       </motion.div>
