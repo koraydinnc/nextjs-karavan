@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import Image from 'next/image';
 import Logo from '../../public/Logo.png';
+import { Button } from '@/components/ui/button';
+import SearchBar from './SearchBar';
 
 const NavBar = () => {
   return (
@@ -63,29 +65,24 @@ const NavBar = () => {
             }}
           >
             <motion.button
-              className="bg-green-600 text-white px-6 py-2 rounded-md font-medium hover:bg-white-600 transition-colors duration-300 shadow-sm"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              Giriş Yap
+              <Button>
+                Giriş Yap
+              </Button>
             </motion.button>
           </motion.div>
         </nav>
       </div>
 
       <motion.div
-        className="w-full px-4 py-2"
+        className="flex w-full px-4 py-2 justify-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="max-w-screen-xl mx-auto">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="w-full p-2 border  rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+      <SearchBar />
       </motion.div>
     </div>
   );
