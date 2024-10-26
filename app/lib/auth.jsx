@@ -6,7 +6,6 @@ export default async function handler(req, res) {
     const { name, email, password } = req.body
 
     try {
-      // Email var mı kontrol et
       const existingUser = await prisma.user.findUnique({
         where: { email },
       })
@@ -15,10 +14,8 @@ export default async function handler(req, res) {
         return res.status(400).json({ message: 'Bu email zaten kayıtlı' })
       }
 
-      // Şifreyi hashle
       const hashedPassword = await bcrypt.hash(password, 10)
 
-      // Yeni kullanıcı oluştur
       const newUser = await prisma.user.create({
         data: {
           name,
