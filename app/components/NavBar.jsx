@@ -6,22 +6,24 @@ import Image from 'next/image';
 import Logo from '../../public/Logo.png';
 import { Button } from '@/components/ui/button';
 import SearchBar from './SearchBar';
+import Link from 'next/link';
 
 const NavBar = () => {
+
   return (
     <div className="bg-white shadow-sm border-b border-gray-200">
-      <div className="flex justify-between items-center p-4 max-w-screen-xl mx-auto">
+      <div className="flex flex-col md:flex-row justify-between items-center p-4 max-w-screen-xl mx-auto">
         <nav className="flex justify-between items-center w-full">
-          <div className="mb-4">
-            <motion.div
-              className="w-24 h-20"
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
-            >
-              <Image src={Logo} alt="Logo" width={150} height={150} />
-            </motion.div>
-          </div>
+          <motion.div
+            className="w-24 h-20 mb-4 md:mb-0"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <Link href={'/Anasayfa'}>
+            <Image src={Logo} alt="Site Logo" width={150} height={150} />
+            </Link>
+          </motion.div>
 
           <motion.div
             className="flex space-x-6 text-gray-700"
@@ -58,20 +60,14 @@ const NavBar = () => {
             animate="visible"
             variants={{
               hidden: { opacity: 0, y: -10 },
-              visible: {
-                opacity: 1,
-                y: 0,
-              }
+              visible: { opacity: 1, y: 0 },
             }}
           >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <Button>
+            <Link href={'/Anasayfa/KayitOl'}>
+              <Button className="text-white bg-green-600 hover:bg-green-700 transition-colors">
                 Giriş Yap
               </Button>
-            </motion.button>
+            </Link>
           </motion.div>
         </nav>
       </div>
@@ -82,7 +78,7 @@ const NavBar = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-      <SearchBar />
+        <SearchBar />
       </motion.div>
     </div>
   );

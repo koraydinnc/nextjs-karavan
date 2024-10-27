@@ -1,28 +1,43 @@
-import { useRegisterMutation } from '../services/api';
-import { useState } from 'react';
+"use client"
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { useRegisterMutation } from '@/store/services/authService'
+import React, { useEffect } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 
 const RegisterForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [register, { isLoading, data, error }] = useRegisterMutation();
 
-  const handleRegister = async () => {
-    try {
-      await register({ email, password }).unwrap();
-      alert('Registration successful!');
-    } catch (err) {
-      alert('Registration failed!');
-    }
-  };
+  const [register,{data, isLoading, error}] = useRegisterMutation()
+  const form = useForm()
+
+  const handleForm = (values) => {
+       console.log(values)
+  }
+  
+
+  useEffect(() => {
+      register()
+  },[data])
+   
 
   return (
-    <div>
-      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-      <button onClick={handleRegister} disabled={isLoading}>Register</button>
-      {error && <p>Error: {error.data.message}</p>}
-    </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleForm)}>
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Kullanıcı Adı</FormLabel>
+              <FormControl>
+                <Input placeholder="Kullanıcı Adı" {...field} />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+      </form>
+    </Form>
   );
-};
+}
 
-export default RegisterForm;
+export default RegisterForm
