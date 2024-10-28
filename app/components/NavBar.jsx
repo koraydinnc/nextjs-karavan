@@ -63,7 +63,7 @@ const NavBar = () => {
               visible: { opacity: 1, y: 0 },
             }}
           >
-            <Link href={'/Anasayfa/KayitOl'}>
+            <Link href={'/Anasayfa/GirisYap'}>
               <Button className="text-white bg-green-600 hover:bg-green-700 transition-colors">
                 Giriş Yap
               </Button>
