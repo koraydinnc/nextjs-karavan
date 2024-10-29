@@ -22,10 +22,10 @@ export default async function handler(req, res) {
       if (!matchPassword) {
         return res.status(400).json({ message: 'Yanlış Şifre!' });
       }
-
       const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, {
         expiresIn: '1h',
       });
+      
 
       return res.status(200).json({ status: 1, message: 'Giriş Başarılı!', token, user:user });
     } catch (error) {

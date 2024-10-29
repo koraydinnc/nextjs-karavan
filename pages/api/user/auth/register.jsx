@@ -30,9 +30,10 @@ export default async function handler(req, res) {
         },
       });
 
-      return res.status(201).json({ 
+      return res.status(200).json({ 
         message: 'Kullanıcı başarıyla oluşturuldu.',
-        user: { data: newUser }
+        data: newUser,
+        status: 1
       });
     } catch (error) {
       console.error('Registration error:', error); 
