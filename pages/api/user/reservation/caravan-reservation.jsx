@@ -6,13 +6,13 @@ export default async function handler(req, res) {
         const { startDate, endDate, person, caravanId } = req.body;
 
         const authHeader = req.headers.authorization;
-        const userToken = authHeader && authHeader.split(' ')[1]; // Bearer tokeni ayıkla
+        const userToken = authHeader && authHeader.split(' ')[1]; // Bearer token'ı ayıkla
+
         if (!userToken) {
             return res.status(401).json({ message: 'Lütfen Giriş Yapınız' });
         }
 
         try {
-            
             const decodedToken = jwt.verify(userToken, process.env.JWT_SECRET);
             const userId = decodedToken.id;
 
@@ -23,6 +23,9 @@ export default async function handler(req, res) {
             const parsedStartDate = new Date(startDate);
             const parsedEndDate = new Date(endDate);
 
+            // caravanId'yi tamsayıya dönüştür
+            const parsedCaravanId = parseInt(caravanId, 10); // stringden int'e dönüştür
+
             const reservation = await prisma.reservation.create({
                 data: {
                     startDate: parsedStartDate,
@@ -30,14 +33,14 @@ export default async function handler(req, res) {
                     user: {
                         connect: { id: userId }
                     },
-                    caravan: { connect: { id: caravanId } },
-                    person: person,
+                    caravan: { connect: { id: parsedCaravanId } }, // Doğru tamsayıyı kullan
+                    person: person, // person alanını kullan
                 },
             });
 
             return res.status(201).json(reservation);
         } catch (error) {
-            console.error(error);
+            console.error('Hata:', error);
             return res.status(500).json({ message: 'Rezervasyon oluşturulurken bir hata oluştu' });
         }
     } else {

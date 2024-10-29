@@ -1,13 +1,10 @@
-import jwt from 'jsonwebtoken'
-
-const secretKey = process.env.JWT_SECRET_KEY || 'your-secret-key'
+import jwt from 'jsonwebtoken';
 
 export function verifyToken(token, role) {
-  try {
-    const decoded = jwt.verify(token, secretKey)
-    return decoded.role === role
-  } catch (error) {
-    console.error('Token doğrulama hatası:', error)
-    return false
-  }
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        return decoded.role === role; 
+    } catch (error) {
+        return false;
+    }
 }
