@@ -42,6 +42,8 @@ model Caravan {
   name         String
   description  String
   price        Float
+  city         String
+  district     String
   photos       String[]
   reservations Reservation[] 
 }
@@ -51,6 +53,9 @@ model CaravanPark {
   name          String
   description   String
   price         Float
+  photos        String[]
+  city          String
+  district      String
   reservations  Reservation[] 
 }
 
@@ -59,5 +64,8 @@ model TinyHouse {
   name         String
   description  String
   price        Float
+  city         String
+  district     String
+  photos        String[]
   reservations Reservation[] 
 }

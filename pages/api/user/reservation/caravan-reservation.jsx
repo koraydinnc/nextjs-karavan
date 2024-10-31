@@ -1,25 +1,9 @@
 import prisma from '@/app/lib/prisma';
-import jwt from 'jsonwebtoken';
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
-        const { startDate, endDate, person, caravanId } = req.body;
-
-        const authHeader = req.headers.authorization;
-        const userToken = authHeader && authHeader.split(' ')[1]; 
-
-        if (!userToken) {
-            return res.status(401).json({ message: 'Lütfen Giriş Yapınız' });
-        }
-
+        const { startDate, endDate, person, caravanId, userId } = req.body;
         try {
-            const decodedToken = jwt.verify(userToken, process.env.JWT_SECRET);
-            const userId = decodedToken.id;
-
-            if (!userId) {
-                return res.status(401).json({ message: 'Geçersiz token' });
-            }
-
             const parsedStartDate = new Date(startDate);
             const parsedEndDate = new Date(endDate);
 
