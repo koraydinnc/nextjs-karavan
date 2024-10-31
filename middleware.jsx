@@ -2,18 +2,19 @@ import { NextResponse } from 'next/server';
 import { verifyToken } from '../utils/verifyToken';
 
 export function middleware(request) {
+  console.log(request)
   const authHeader = request.headers.get('authorization'); 
   const userToken = authHeader && authHeader.split(' ')[1]; 
 
   if (!userToken || !verifyToken(userToken, 'user')) {
-    const url = request.nextUrl.clone(); // Geçerli URL'yi klonla
-    url.pathname = '/Anasayfa'; // Yönlendirilecek sayfa
-    return NextResponse.redirect(url); // Kullanıcıyı yönlendir
+    const url = request.nextUrl.clone();
+    url.pathname = '/Anasayfa';
+    return NextResponse.redirect(url); 
   }
 
-  return NextResponse.next(); // İsteği bir sonraki middleware veya handler'a yönlendir
+  return NextResponse.next(); 
 }
 
 export const config = {
-  matcher: ['/api/user/reservation'], // Middleware'in uygulanacağı yol
+  matcher: ['/api/user/reservation'], 
 };

@@ -141,7 +141,7 @@ const RegisterForm = () => {
             )}
           />
 
-          <Button loading={isLoading} type="submit" disabled={isLoading} className="w-full mt-4">
+          <Button type='submit' className="w-full mt-4">
             Kayıt Ol
           </Button>
         </form>

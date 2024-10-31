@@ -42,6 +42,7 @@ model Caravan {
   name         String
   description  String
   price        Float
+  photos       String[]
   reservations Reservation[] 
 }
 

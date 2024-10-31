@@ -6,7 +6,7 @@ export default async function handler(req, res) {
         const { startDate, endDate, person, caravanId } = req.body;
 
         const authHeader = req.headers.authorization;
-        const userToken = authHeader && authHeader.split(' ')[1]; // Bearer token'ı ayıkla
+        const userToken = authHeader && authHeader.split(' ')[1]; 
 
         if (!userToken) {
             return res.status(401).json({ message: 'Lütfen Giriş Yapınız' });
@@ -23,9 +23,6 @@ export default async function handler(req, res) {
             const parsedStartDate = new Date(startDate);
             const parsedEndDate = new Date(endDate);
 
-            // caravanId'yi tamsayıya dönüştür
-            const parsedCaravanId = parseInt(caravanId, 10); // stringden int'e dönüştür
-
             const reservation = await prisma.reservation.create({
                 data: {
                     startDate: parsedStartDate,
@@ -33,8 +30,8 @@ export default async function handler(req, res) {
                     user: {
                         connect: { id: userId }
                     },
-                    caravan: { connect: { id: parsedCaravanId } }, // Doğru tamsayıyı kullan
-                    person: person, // person alanını kullan
+                    caravan: { connect: { id: caravanId } }, 
+                    person: person, 
                 },
             });
 
