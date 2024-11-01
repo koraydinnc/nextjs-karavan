@@ -7,8 +7,12 @@ import Logo from '../../public/Logo.png';
 import { Button } from '@/components/ui/button';
 import SearchBar from './SearchBar';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import LoginAvatar from './LoginAvatar';
 
 const NavBar = () => {
+
+  const auth = useSelector(state => state.auth)
 
   return (
     <div className="bg-white shadow-sm border-b border-gray-200">
@@ -63,11 +67,21 @@ const NavBar = () => {
               visible: { opacity: 1, y: 0 },
             }}
           >
-            <Link href={'/Anasayfa/GirisYap'}>
-              <Button className="text-white bg-green-600 hover:bg-green-700 transition-colors">
+           
+              {auth ? (
+                <LoginAvatar/>
+
+              )
+              :
+              (
+                <Link href={'/Anasayfa/GirisYap'}>
+                <Button className="text-white bg-green-600 hover:bg-green-700 transition-colors">
                 Giriş Yap
               </Button>
-            </Link>
+              </Link>
+
+              )
+            }
           </motion.div>
         </nav>
       </div>

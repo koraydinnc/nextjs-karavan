@@ -12,7 +12,9 @@ import { Toaster } from '@/components/ui/toaster';
 import { toast } from '@/hooks/use-toast';
 import { useLoginMutation } from '@/store/services/authService';
 import { useRouter } from 'next/navigation';
-import LoadingSpin from './LoadingSpin';
+import { useDispatch, useSelector } from 'react-redux';
+import { setToken } from '@/store/slices/authSlice';
+
 
 const formSchema = z.object({
   email: z.string().email("Geçersiz email adresi"),
@@ -21,6 +23,7 @@ const formSchema = z.object({
 
 const LoginForm = () => {
   const [login, { data, isLoading, error }] = useLoginMutation();
+  const dispatch = useDispatch()
   const router = useRouter()
 
   useEffect(() => {
@@ -50,6 +53,7 @@ const LoginForm = () => {
   const handleFormSubmit = async (values) => {
     try {
       await login(values).unwrap();
+      dispatch(setToken(data.token))
       if (data && data.status === 1) {
           router.push('/Anasayfa')
       }
