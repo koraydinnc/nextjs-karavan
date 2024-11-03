@@ -49,16 +49,15 @@ const LoginForm = () => {
       password: ""
     }
   });
-  data && console.log(data)
   const handleFormSubmit = async (values) => {
     try {
-      await login(values).unwrap();
-      dispatch(setToken(data.token))
-      if (data && data.status === 1) {
+      const result = await login(values).unwrap();
+      dispatch(setToken(result.token))
+      if (result.status === 1) {
           router.push('/Anasayfa')
       }
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   };
 

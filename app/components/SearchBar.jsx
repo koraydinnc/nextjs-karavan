@@ -1,4 +1,3 @@
-"use client";
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -10,23 +9,43 @@ import { Calendar as CalendarPicker } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
+import { useSearchMutation } from '../../store/services/searchService';
 
 const SearchBar = () => {
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [showSearchText, setShowSearchText] = useState(false);
+  const [search] = useSearchMutation();
   const formRef = useRef();
   const form = useForm({
     defaultValues: {
       location: '',
       checkIn: null,
       checkOut: null,
-      guests: 1,
+      person: 1,
     }
   });
 
-  const handleForm = (value) => {
-    console.log(value);
+  const handleForm = async (value) => {
+    if (checkOutDate < checkInDate) {
+      alert('Çıkış tarihi giriş tarihinden önce olamaz.');
+      return;
+    }
+
+    const searchData = {
+      searchType: "caravan",
+      startDate: checkInDate ? format(checkInDate, "yyyy-MM-dd") : null,
+      endDate: checkOutDate ? format(checkOutDate, "yyyy-MM-dd") : null,
+      person: Number(value.person),
+    };
+  
+    try {
+      await search({ searchData }).unwrap();
+      form.reset(); 
+    } catch (err) {
+      console.error('Hata:', err);
+      alert('Arama sırasında bir hata oluştu.');
+    }
   };
 
   const handleFocus = () => setShowSearchText(true);
@@ -130,7 +149,7 @@ const SearchBar = () => {
 
         <FormField
           control={form.control}
-          name="guests"
+          name="person"
           render={({ field }) => (
             <FormItem className='mx-2'>
               <FormLabel className="font-bold text-sm text-gray-500">Kişiler</FormLabel>

@@ -1,6 +1,5 @@
-import { toast } from '@/hooks/use-toast';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import Cookies from 'js-cookie'; // cookies işlemleri için ekledik
+import Cookies from 'js-cookie';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 

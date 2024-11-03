@@ -4,7 +4,6 @@ import React from 'react';
 const Page = () => {
   return (
       <div className="grid grid-cols-1">
-        <LoginAvatar/>
       </div>
 
      

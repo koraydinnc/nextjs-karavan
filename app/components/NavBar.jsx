@@ -12,7 +12,7 @@ import LoginAvatar from './LoginAvatar';
 
 const NavBar = () => {
 
-  const auth = useSelector(state => state.auth)
+  const auth = useSelector(state => state.auth.token)
 
   return (
     <div className="bg-white shadow-sm border-b border-gray-200">
