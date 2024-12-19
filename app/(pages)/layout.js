@@ -10,14 +10,14 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="font-sans antialiased">
         <Provider store={store}>
-          <div className="min-h-screen bg-gray-100">
+          <div className="min-h-screen bg-white">
           <Toaster/>
             <NavBar />
             <div className="flex">
               <main className="flex-1 ml-0  p-8">
                 <div className="flex justify-between items-center mb-6">
                 </div>
-                <div className="bg-white rounded-lg shadow-md p-6">
+                <div className="bg-white rounded-lg  p-6">
                     {children}
                 </div>
               </main>

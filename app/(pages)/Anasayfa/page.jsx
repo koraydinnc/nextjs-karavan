@@ -1,25 +1,21 @@
 "use client"
 
+import HomeListCard from '@/app/components/HomeListCard';
+import LoadingSpin from '@/app/components/LoadingSpin';
 import { useListQuery } from '@/store/services/listService';
 import React from 'react';
 
 const Page = () => {
   const { data, isLoading, error } = useListQuery();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingSpin/>;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="grid grid-cols-1 gap-4">
-      <h1>Your Reservations</h1>
-      <ul>
-        {data && data.map(reservation => (
-          <li key={reservation.id}>
-            <p>{reservation.name}</p>
-            <p>{reservation.date}</p>
-          </li>
-        ))}
-      </ul>
+    <div className="grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 gap-4">
+      {data && data.map((item) => (
+        <HomeListCard key={item.id} data={item} />
+      ))}
     </div>
   );
 };

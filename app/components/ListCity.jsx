@@ -23,7 +23,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export function ListCity({ value, onChange }) {
+export function ListCity({ onFocus, onChange }) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const [selectedCity, setSelectedCity] = React.useState(null);
@@ -34,16 +34,18 @@ export function ListCity({ value, onChange }) {
     setOpen(false);
   };
 
+  const CitySelectButton = (
+    <Button variant="outline" onFocus={onFocus} className="w-[150px] justify-start">
+      {selectedCity ? <>{selectedCity.name}</> : <>Şehirler</>}
+    </Button>
+  );
+
   if (isDesktop) {
     return (
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Button variant="outline" className="w-[150px] justify-start">
-            {selectedCity ? <>{selectedCity.name}</> : <>Şehirler</>}
-          </Button>
-        </PopoverTrigger>
+        <PopoverTrigger asChild>{CitySelectButton}</PopoverTrigger>
         <PopoverContent className="w-[200px] p-0" align="start">
-          <CityList onSelect={handleSelect} />
+          <CityList onFocus={onFocus} onSelect={handleSelect} />
         </PopoverContent>
       </Popover>
     );
@@ -51,11 +53,7 @@ export function ListCity({ value, onChange }) {
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <Button variant="outline" className="w-[150px] justify-start">
-          {selectedCity ? <>{selectedCity.name}</> : <>Şehirler</>}
-        </Button>
-      </DrawerTrigger>
+      <DrawerTrigger asChild>{CitySelectButton}</DrawerTrigger>
       <DrawerContent>
         <div className="mt-4 border-t">
           <CityList onSelect={handleSelect} />
@@ -65,19 +63,15 @@ export function ListCity({ value, onChange }) {
   );
 }
 
-function CityList({ onSelect }) {
+function CityList({ onSelect, onFocus }) {
   return (
     <Command>
-      <CommandInput placeholder="Şehir ara..." />
+      <CommandInput onFocus={onFocus} placeholder="Şehir ara..." />
       <CommandList>
         <CommandEmpty>Sonuç bulunamadı.</CommandEmpty>
         <CommandGroup>
           {CitiesList.map((city) => (
-            <CommandItem
-              key={city.id}
-              value={city.name}
-              onSelect={() => onSelect(city)}
-            >
+            <CommandItem key={city.id} value={city.name} onSelect={() => onSelect(city)}>
               {city.name}
             </CommandItem>
           ))}

@@ -63,7 +63,6 @@ const LoginForm = () => {
 
   return (
     <Form {...form} >
-      <Toaster />
       <form onSubmit={form.handleSubmit(handleFormSubmit)} className="max-w-md mx-auto rounded-lg shadow-sm">
         <FormField
           control={form.control}
