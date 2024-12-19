@@ -16,7 +16,7 @@ const NavBar = () => {
 
   return (
     <div className="bg-white shadow-sm border-b border-gray-200">
-      <div className="flex flex-col md:flex-row justify-between items-center p-4 max-w-screen-xl mx-auto">
+      <div className="flex flex-col md:flex-row justify-between items-center p-4  max-w-screen-xxl mx-12">
         <nav className="flex justify-between items-center w-full">
           <motion.div
             className="w-24 h-20 mb-4 md:mb-0"
@@ -30,64 +30,33 @@ const NavBar = () => {
           </motion.div>
 
           <motion.div
-            className="flex space-x-6 text-gray-700"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0, y: -10 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: {
-                  delay: 0.3,
-                  duration: 0.8,
-                  staggerChildren: 0.2
-                },
-              }
-            }}
-          >
-            {['Karavan Konaklama', '|', 'TinyHouse Konaklama', '|', 'Bungalov Konaklama'].map((text, index) => (
-              <motion.span
-                key={index}
-                className="text-lg font-medium hover:text-green-600 cursor-pointer transition-colors duration-300"
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                {text}
-              </motion.span>
-            ))}
-          </motion.div>
+  className="flex items-center justify-center space-x-6"
+  initial="hidden"
+  animate="visible"
+  variants={{
+    hidden: { opacity: 0, y: -10 },
+    visible: { opacity: 1, y: 0 },
+  }}
+>
+  {auth ? (
+    <LoginAvatar />
+  ) : (
+    <Link href={'/Anasayfa/GirisYap'}>
+      <Button
+        className="px-6 py-2 text-sm font-medium text-white bg-green-500 hover:bg-green-600 
+                  transition-all duration-300 rounded-full shadow-lg hover:shadow-2xl"
+      >
+        Giriş Yap
+      </Button>
+    </Link>
+  )}
+</motion.div>
 
-          <motion.div
-            className="flex space-x-6"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0, y: -10 },
-              visible: { opacity: 1, y: 0 },
-            }}
-          >
-           
-              {auth ? (
-                <LoginAvatar/>
-
-              )
-              :
-              (
-                <Link href={'/Anasayfa/GirisYap'}>
-                <Button className="text-white bg-green-600 hover:bg-green-700 transition-colors">
-                Giriş Yap
-              </Button>
-              </Link>
-
-              )
-            }
-          </motion.div>
         </nav>
       </div>
 
       <motion.div
-        className="flex w-full px-4 py-2 justify-center"
+        className="flex w-full px-4 py-2 justify-center border border-gray-200 shadow-md"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}

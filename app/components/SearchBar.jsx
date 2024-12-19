@@ -15,7 +15,6 @@ import { useSearchMutation } from '../../store/services/searchService';
 import { ListCity } from './ListCity';
 import { useToast } from '@/hooks/use-toast';
 import LoadingSpin from './LoadingSpin';
-import { Toaster } from '@/components/ui/toaster';
 
 const SearchBar = () => {
   const [checkInDate, setCheckInDate] = useState(null);
@@ -103,7 +102,7 @@ const SearchBar = () => {
   }, []);
 
   return (
-    <Form {...form}>
+    <Form {...form} className='border border-gray-200 rounded-full p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 items-center'>
      
       <form 
         ref={formRef} 

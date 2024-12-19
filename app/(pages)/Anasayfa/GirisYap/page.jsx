@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import LoginForm from '@/app/components/LoginForm'
-import React from 'react'
+import LoginForm from "@/app/components/LoginForm";
+import React from "react";
 
 const page = () => {
   return (
-    <div>
-       <LoginForm/>
+    <div className="flex justify-center items-center h-max">
+      <LoginForm className="min-w-[40%]" />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;
