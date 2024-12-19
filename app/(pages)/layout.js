@@ -4,12 +4,14 @@ import { Provider } from 'react-redux';
 import store from '@/store';
 import './globals.css'
 import NavBar from '../components/NavBar';
+import { Toaster } from '@/components/ui/toaster';
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="font-sans antialiased">
         <Provider store={store}>
           <div className="min-h-screen bg-gray-100">
+          <Toaster/>
             <NavBar />
             <div className="flex">
               <main className="flex-1 ml-0  p-8">

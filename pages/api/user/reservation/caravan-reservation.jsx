@@ -1,3 +1,5 @@
+"use server"
+
 import prisma from '@/app/lib/prisma';
 
 export default async function handler(req, res) {

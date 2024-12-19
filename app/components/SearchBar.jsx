@@ -1,3 +1,5 @@
+"use client"
+
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -13,6 +15,7 @@ import { useSearchMutation } from '../../store/services/searchService';
 import { ListCity } from './ListCity';
 import { useToast } from '@/hooks/use-toast';
 import LoadingSpin from './LoadingSpin';
+import { Toaster } from '@/components/ui/toaster';
 
 const SearchBar = () => {
   const [checkInDate, setCheckInDate] = useState(null);
@@ -22,7 +25,6 @@ const SearchBar = () => {
   const { toast } = useToast();
   const formRef = useRef();
 
-  const [isSearchCompleted, setIsSearchCompleted] = useState(false); // New state to track search completion
 
   const form = useForm({
     defaultValues: {
@@ -37,25 +39,7 @@ const SearchBar = () => {
      <LoadingSpin/>
   }
 
-  useEffect(() => {
-    if (isSearchCompleted) { // Only show the toast when search is completed
-      if (data && data.status === 1) {
-        toast({
-          variant: 'default',
-          title: 'Başarılı',
-          description: 'Arama işlemi başarıyla tamamlandı.',
-        });
-      } else if (data && data.status === 400) {
-        toast({
-          variant: 'destructive',
-          title: 'Hata',
-          description: data.message,
-        });
-      }
 
-      setIsSearchCompleted(false); // Reset the search completion flag
-    }
-  }, [isSearchCompleted, data, toast]);
 
   const handleForm = async (value) => {
     if (checkOutDate && checkInDate && checkOutDate < checkInDate) {
@@ -86,16 +70,11 @@ const SearchBar = () => {
 
     try {
       const response = await search({ searchData }).unwrap();
-      if (response.status === 400) {
         toast({
           variant: 'destructive',
           title: 'Hata',
           description: response.message,
-        });
-      } else {
-        // Set search completion flag after a successful search
-        setIsSearchCompleted(true);
-      }
+      })
 
       form.reset(); 
     } catch (err) {
@@ -125,6 +104,7 @@ const SearchBar = () => {
 
   return (
     <Form {...form}>
+     
       <form 
         ref={formRef} 
         onSubmit={form.handleSubmit(handleForm)} 
