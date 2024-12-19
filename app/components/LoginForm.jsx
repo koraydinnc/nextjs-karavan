@@ -10,18 +10,25 @@ import { useState } from "react";
 import KaravanTatil from "../../public/KaravanTatil.gif";
 import { useLoginMutation } from "@/store/services/authService";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken } from "@/store/slices/authSlice";
 
 const LoginForm = ({ className, ...props }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [login, { isLoading }] = useLoginMutation();
-
+  
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await login({ email, password }).unwrap();
+      dispatch(setToken(response.token));
+      if (response.status === 1) {
+        router.push("/Anasayfa");
+      }
       console.log("Giriş Başarılı:", response);
     } catch (error) {
       console.error("Giriş Hatası:", error);
