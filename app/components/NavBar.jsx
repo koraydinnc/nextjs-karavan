@@ -46,7 +46,7 @@ const NavBar = () => {
               }
             }}
           >
-            {['Karavan Konaklama Yerleri', 'Konaklama Yerleri'].map((text, index) => (
+            {['Karavan Konaklama', '|', 'TinyHouse Konaklama', '|', 'Bungalov Konaklama'].map((text, index) => (
               <motion.span
                 key={index}
                 className="text-lg font-medium hover:text-green-600 cursor-pointer transition-colors duration-300"

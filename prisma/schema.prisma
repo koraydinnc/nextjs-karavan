@@ -45,8 +45,33 @@ model Caravan {
   city         String
   district     String
   photos       String[]
-  reservations Reservation[] 
+  reservations Reservation[]
+  person       Int
+  smoking      Boolean?
+  
+  refrigerator         Boolean? 
+  shower               Boolean? // Duş
+  externalTent         Boolean? // Dış Tente
+  gasDetector          Boolean? // Gas Dedektörü
+  solarEnergy          Boolean? // Güneş Enerjisi
+  heatingSystem        Boolean? // Isıtma Sistemi
+  gelBattery           Boolean? // Jel Yaşam Aküsü
+  kitchen              Boolean? // Mutfak
+  hotWater             Boolean? // Sıcak Su
+  toilet               Boolean? // Tuvalet
+  webasto              Boolean? // Webasto
+  inverter             Boolean? // İnverter
+  vehicleAC            Boolean? // Araç Kliması
+  cdPlayer             Boolean? // CD Çalar
+  rearViewCamera       Boolean? // Geri Görüş Kamerası
+  foldableTable        Boolean? // Katlanır Masa
+  foldableChairs       Boolean? // Katlanır Sandalye
+  multimedia           Boolean? // Multimedya
+  insectScreen         Boolean? // Sineklik
+  tv                   Boolean? // TV
+  livingAreaAC         Boolean? // Yaşam Alanı Kliması
 }
+
 
 model CaravanPark {
   id            Int           @id @default(autoincrement())

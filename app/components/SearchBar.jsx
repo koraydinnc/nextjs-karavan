@@ -1,7 +1,7 @@
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Calendar as CalendarIcon, Search } from 'lucide-react'; 
+import { Calendar as CalendarIcon, Search } from 'lucide-react';
 import { tr } from 'date-fns/locale';
 import React, { useState, useRef, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -10,13 +10,20 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
 import { useSearchMutation } from '../../store/services/searchService';
+import { ListCity } from './ListCity';
+import { useToast } from '@/hooks/use-toast';
+import LoadingSpin from './LoadingSpin';
 
 const SearchBar = () => {
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [showSearchText, setShowSearchText] = useState(false);
-  const [search] = useSearchMutation();
+  const [search, { data, isLoading }] = useSearchMutation();
+  const { toast } = useToast();
   const formRef = useRef();
+
+  const [isSearchCompleted, setIsSearchCompleted] = useState(false); // New state to track search completion
+
   const form = useForm({
     defaultValues: {
       location: '',
@@ -26,9 +33,46 @@ const SearchBar = () => {
     }
   });
 
+  if (isLoading) {
+     <LoadingSpin/>
+  }
+
+  useEffect(() => {
+    if (isSearchCompleted) { // Only show the toast when search is completed
+      if (data && data.status === 1) {
+        toast({
+          variant: 'default',
+          title: 'Başarılı',
+          description: 'Arama işlemi başarıyla tamamlandı.',
+        });
+      } else if (data && data.status === 400) {
+        toast({
+          variant: 'destructive',
+          title: 'Hata',
+          description: data.message,
+        });
+      }
+
+      setIsSearchCompleted(false); // Reset the search completion flag
+    }
+  }, [isSearchCompleted, data, toast]);
+
   const handleForm = async (value) => {
-    if (checkOutDate < checkInDate) {
-      alert('Çıkış tarihi giriş tarihinden önce olamaz.');
+    if (checkOutDate && checkInDate && checkOutDate < checkInDate) {
+      toast({
+        variant: 'destructive',
+        title: 'Hata',
+        description: 'Çıkış tarihi giriş tarihinden önce olamaz.',
+      });
+      return;
+    }
+
+    if (!value.checkOut || !value.checkIn || !value.location || !value.person) {
+      toast({
+        variant: 'destructive',
+        title: 'Hata',
+        description: 'Tüm alanları doldurduğunuzdan emin olun.',
+      });
       return;
     }
 
@@ -37,14 +81,30 @@ const SearchBar = () => {
       startDate: checkInDate ? format(checkInDate, "yyyy-MM-dd") : null,
       endDate: checkOutDate ? format(checkOutDate, "yyyy-MM-dd") : null,
       person: Number(value.person),
+      location: value.location,
     };
-  
+
     try {
-      await search({ searchData }).unwrap();
+      const response = await search({ searchData }).unwrap();
+      if (response.status === 400) {
+        toast({
+          variant: 'destructive',
+          title: 'Hata',
+          description: response.message,
+        });
+      } else {
+        // Set search completion flag after a successful search
+        setIsSearchCompleted(true);
+      }
+
       form.reset(); 
     } catch (err) {
-      console.error('Hata:', err);
-      alert('Arama sırasında bir hata oluştu.');
+      console.error('Arama hatası:', err);
+      toast({
+        variant: 'destructive',
+        title: 'Hata',
+        description: 'Arama sırasında bir hata oluştu.',
+      });
     }
   };
 
@@ -74,10 +134,13 @@ const SearchBar = () => {
           control={form.control}
           name="location"
           render={({ field }) => (
-            <FormItem className='mx-4'>
+            <FormItem className='mx-4 flex flex-col'>
               <FormLabel className="font-bold text-sm text-gray-500">Yer</FormLabel>
               <FormControl>
-                <Input className='rounded-lg' placeholder="Gidilecek yerleri arayın" {...field} onFocus={handleFocus} />
+              <ListCity 
+                  value={form.getValues("location")} 
+                  onChange={(value) => form.setValue("location", value)} 
+                />
               </FormControl>
             </FormItem>
           )}
