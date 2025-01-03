@@ -2,7 +2,7 @@
 
 import { Provider } from 'react-redux';
 import store from '@/store';
-import './globals.css'
+import '../../app/globals.css'
 import NavBar from '../components/NavBar';
 import { Toaster } from '@/components/ui/toaster';
 export default function RootLayout({ children }) {

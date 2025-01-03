@@ -1,21 +1,30 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { CarouselImage } from "./CarouselImage";
-import { Star } from "lucide-react"; // Shadcn/Lucide için yıldız ikonu
+import { Star } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const HomeListCard = ({ data }) => {
+  const router = useRouter();
+  console.log(data)
+  const photos = data.photos?.length > 0 ? data.photos : ["default-image-url.jpg"];
+  const handleCardClick = (id) => {
+    console.log(id,'id')
+    router.push(`/Oda/${id}`);
+  };
+
   return (
-    <div className="max-w-sm bg-white border rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
-      <div className="relative w-full h-56">
-        <CarouselImage data={data.photos} />
+    <div
+      className="max-w-sm bg-white border rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 cursor-pointer"
+    >
+      <div  onClick={() => handleCardClick(data.id)} className="relative w-full">
+        <CarouselImage data={photos} />
       </div>
 
-      <div className="p-4 mt-12">
+      <div className="p-4">
         <div className="flex justify-between items-center mb-3">
           <h2 className="text-lg font-semibold text-gray-900 truncate">
             {data.name || "Başlık Bulunamadı"}
           </h2>
-          {/* Rating */}
           <div className="flex items-center">
             <span className="text-sm font-medium text-gray-800 mr-1">
               {data.rating || "0.0"}
@@ -36,14 +45,6 @@ const HomeListCard = ({ data }) => {
   );
 };
 
-HomeListCard.propTypes = {
-  data: PropTypes.shape({
-    photos: PropTypes.arrayOf(PropTypes.string),
-    name: PropTypes.string,
-    price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    description: PropTypes.string,
-    rating: PropTypes.number, // Derecelendirme için prop
-  }).isRequired,
-};
+
 
 export default HomeListCard;

@@ -35,8 +35,19 @@ export function ListCity({ onFocus, onChange }) {
   };
 
   const CitySelectButton = (
-    <Button variant="outline" onFocus={onFocus} className="w-[150px] justify-start">
-      {selectedCity ? <>{selectedCity.name}</> : <>Şehirler</>}
+    <Button 
+      variant="ghost" 
+      onFocus={onFocus} 
+      className="w-[150px] justify-between"
+      role="combobox"
+      aria-expanded={open}
+    >
+      <div className="flex flex-col">
+        <span className="text-start">Yer</span>
+      <span className="text-gray-500">{selectedCity ? selectedCity.name : "Gidilecek Yerleri Arayın"}</span>
+    
+        </div>      
+        
     </Button>
   );
 
@@ -65,13 +76,18 @@ export function ListCity({ onFocus, onChange }) {
 
 function CityList({ onSelect, onFocus }) {
   return (
-    <Command>
-      <CommandInput onFocus={onFocus} placeholder="Şehir ara..." />
+    <Command className="rounded-lg border shadow-md">
+      <CommandInput onFocus={onFocus} placeholder="Şehir ara..." className="border-none focus:ring-0" />
       <CommandList>
         <CommandEmpty>Sonuç bulunamadı.</CommandEmpty>
-        <CommandGroup>
+        <CommandGroup className="max-h-[200px] overflow-auto">
           {CitiesList.map((city) => (
-            <CommandItem key={city.id} value={city.name} onSelect={() => onSelect(city)}>
+            <CommandItem 
+              key={city.id} 
+              value={city.name} 
+              onSelect={() => onSelect(city)}
+              className="cursor-pointer hover:bg-gray-100"
+            >
               {city.name}
             </CommandItem>
           ))}

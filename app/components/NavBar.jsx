@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Logo from '../../public/Logo.png';
 import { Button } from '@/components/ui/button';
@@ -9,13 +9,14 @@ import SearchBar from './SearchBar';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import LoginAvatar from './LoginAvatar';
+import { HomeDropDown } from './HomeDropDown';
 
 const NavBar = () => {
-
+   
   const auth = useSelector(state => state.auth.token)
 
   return (
-    <div className="bg-white shadow-sm border-b border-gray-200">
+    <div className="bg-white shadow-sm border border-gray-200" suppressHydrationWarning>
       <div className="flex flex-col md:flex-row justify-between items-center p-4  max-w-screen-xxl mx-12">
         <nav className="flex justify-between items-center w-full">
           <motion.div
@@ -41,14 +42,10 @@ const NavBar = () => {
   {auth ? (
     <LoginAvatar />
   ) : (
-    <Link href={'/Anasayfa/GirisYap'}>
-      <Button
-        className="px-6 py-2 text-sm font-medium text-white bg-green-500 hover:bg-green-600 
-                  transition-all duration-300 rounded-full shadow-lg hover:shadow-2xl"
-      >
-        Giriş Yap
-      </Button>
-    </Link>
+    <div>
+     
+        <HomeDropDown />
+    </div>
   )}
 </motion.div>
 
@@ -56,7 +53,7 @@ const NavBar = () => {
       </div>
 
       <motion.div
-        className="flex w-full px-4 py-2 justify-center border border-gray-200 shadow-md"
+        className="flex justify-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -64,6 +61,7 @@ const NavBar = () => {
         <SearchBar />
       </motion.div>
     </div>
+     
   );
 };
 

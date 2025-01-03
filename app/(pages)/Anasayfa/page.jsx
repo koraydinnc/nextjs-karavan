@@ -2,6 +2,7 @@
 
 import HomeListCard from '@/app/components/HomeListCard';
 import LoadingSpin from '@/app/components/LoadingSpin';
+import { SearchSpaceBar } from '@/app/components/SearchSpaceBar';
 import { useListQuery } from '@/store/services/listService';
 import React from 'react';
 
@@ -12,10 +13,17 @@ const Page = () => {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 gap-4">
+    <div >
+      <div className="w-full">
+      <SearchSpaceBar />
+
+      </div>
+      <div className="grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 gap-4">
       {data && data.map((item) => (
         <HomeListCard key={item.id} data={item} />
       ))}
+      </div>
+    
     </div>
   );
 };
